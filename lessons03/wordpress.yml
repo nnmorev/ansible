@@ -1,0 +1,18 @@
+---
+  - hosts: test
+    become: yes
+    remote_user: morev
+
+    vars:
+            - mysql_root_password: "test"
+            - domain: "tes1"
+            - download_url: "http://wordpress.org/latest.tar.gz"
+            - wpdirectory: "/var/www"
+            - db_name: "wordpress"
+            - db_user: "wordpress"
+            - db_password: "wordpress"
+    roles:
+            - { role: nginx }
+            - { role: mysql }
+            - { role: php }
+            - { role: wordpress }

@@ -1,0 +1,8 @@
+[test]
+test1 ansible_ssh_host=192.168.31.18 ansible_ssh_user=morev
+test2 ansible_ssh_host=192.168.31.164 ansible_ssh_user=morev
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_sudo_pass=dqvcnS
+

@@ -1,0 +1,3 @@
+- name: Install MySQL
+  apt: name={{ item }} update_cache=yes state=latest
+  loop: ['mysql-server', 'mysql-client', 'python3-mysqldb']

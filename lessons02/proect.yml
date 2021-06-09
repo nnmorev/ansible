@@ -1,0 +1,50 @@
+---
+  - hosts: test
+    become: yes
+    remote_user: morev
+
+    vars:
+            http_port: "9090"
+
+    tasks:
+            - name: Add user to remote hosts
+              user:
+                       name: test
+                       comment: Testing users
+                       password: ""
+                       groups: users
+                       update_password: on_create
+             
+            - name: Create file  to home directory
+              file:
+                       content: "{}"
+                       path: /home/test/application.json
+                       group: users
+                       mode: 0775
+
+            - name: Install Nginx
+              apt: name={{ item }} update_cache=yes state=latest
+              loop: ['nginx']
+
+            - name: Start Nginx
+              service: 
+                       name: nginx 
+                       state: started 
+                       enabled: yes
+
+            - name: Process Nginx started
+              ansible.builtin.systemd:
+                       state: started
+                       name: nginx 
+            
+            - name: Create directory /opt/data_arhives           
+              file:
+                      path: /opt_data/arhives
+                      mode: 0775
+                      group: users
+                      state: directory
+
+            - name: Downloads file internet /opt/data_archives
+              get_url:
+                      url: http://ftp.gnu.org/gnu/wget/wget-1.5.3.tar.gz
+                      dest: /opt_data/arhives
